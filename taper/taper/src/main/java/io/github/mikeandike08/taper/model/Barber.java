@@ -1,10 +1,11 @@
 package io.github.mikeandike08.taper.model;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Barber {
     // Barber Personal Info
     private String name;
+    private String shopName;
     private String email;
     private String phoneNumber;
     private String city;
@@ -19,8 +20,9 @@ public class Barber {
     private Set<String> styles = new HashSet<>();
 
     // Initialize the object
-    public Barber(String name, String email, String phoneNumber, String city, String state) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state) {
         this.name = name;
+        this.shopName = shopName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.city = city;
@@ -28,6 +30,10 @@ public class Barber {
     }
 
     // Create our Setters
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
     public void setImageUrl(String url){
         this.profileImageUrl = url;
     }
@@ -82,7 +88,11 @@ public class Barber {
         return this.profileImageUrl;
     }
 
-    public Long getID(){
+    public String getShopName() {
+        return this.shopName;
+    }
+
+    public Long getId(){
         return this.id;
     }
 
