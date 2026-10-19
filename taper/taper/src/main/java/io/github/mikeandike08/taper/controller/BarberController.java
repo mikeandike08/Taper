@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import io.github.mikeandike08.taper.service.BarberService;
 import io.github.mikeandike08.taper.model.Barber;
+import io.github.mikeandike08.taper.controller.ListResponse;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,12 @@ public class BarberController {
     }
 
     @GetMapping
-    public List<Barber> getAllBarbers(){
-        return barberService.getAllBarbers();
+    public ListResponse<Barber> getAllBarbers(){
+        // Get our list of barbers
+        List<Barber> barbers = barberService.getAllBarbers();
+
+        // Create a ListResponse, so it has the key "items"
+        ListResponse<Barber> response = new ListResponse<>(barbers);
+        return response;
     }
 }
