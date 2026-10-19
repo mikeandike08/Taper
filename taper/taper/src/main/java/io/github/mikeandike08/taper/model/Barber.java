@@ -9,6 +9,9 @@ public class Barber {
     private String phoneNumber;
     private String city;
     private String state;
+    
+    // links to our s3 storage
+    private String profileImageUrl;
 
     private Long id; // Decide whether to get ID from postgres, or generate one ourselves.
 
@@ -25,6 +28,10 @@ public class Barber {
     }
 
     // Create our Setters
+    public void setImageUrl(String url){
+        this.profileImageUrl = url;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -69,6 +76,10 @@ public class Barber {
 
     public String getState() {
         return this.state;
+    }
+
+    public String getImageUrl(){
+        return this.profileImageUrl;
     }
 
     public Long getID(){
