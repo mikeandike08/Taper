@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.mikeandike08.taper.dto.BarberSummary;
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.service.BarberService;
 
@@ -25,17 +26,22 @@ public class BarberController {
      * @return A ListResponse object containing a list of barbers, with the key "items"
      */
     @GetMapping
-    public ListResponse<Barber> getAllBarbers(
+    public ListResponse<BarberSummary> getAllBarbers(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size){
         
-        size = Math.min(size, 1000); // Limit the size to 1000
+        size = Math.min(size, 100); // Limit the size to 100
 
         // Get our list of barbers
         List<Barber> barbers = barberService.getAllBarbers(page, size);
 
+        // Convert to our BarberSummary DTO
+        List<BarberSummary> barberSummaries = barbers.stream()
+            .map(BarberSummary::from)
+            .collect(java.util.stream.Collectors.toList());
+
         // Create a ListResponse, so it has the key "items"
-        ListResponse<Barber> response = new ListResponse<>(barbers);
+        ListResponse<BarberSummary> response = new ListResponse<>(barberSummaries);
         return response;
     }
 }
