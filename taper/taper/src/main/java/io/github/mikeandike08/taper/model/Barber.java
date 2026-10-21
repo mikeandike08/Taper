@@ -99,4 +99,8 @@ public class Barber {
     public Set<String> getStyles(){
         return Set.copyOf(this.styles);
     }
+
+    public String getProfileImageUrl() {
+        return this.profileImageUrl;
+    }
 }
