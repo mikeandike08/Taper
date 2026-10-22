@@ -22,7 +22,7 @@ public class BarberController {
     }
 
     /**
-     * 
+     * Gets a list of all barbers
      * @param page @defaultValue = 0
      * @param size @defaultValue = 10
      * @return A ListResponse object containing a list of barbers, with the key "items"
