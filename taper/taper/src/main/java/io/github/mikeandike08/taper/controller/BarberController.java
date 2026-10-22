@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.github.mikeandike08.taper.dto.BarberSummary;
 import io.github.mikeandike08.taper.dto.ListResponse;
 import io.github.mikeandike08.taper.model.Barber;
+import io.github.mikeandike08.taper.model.PageResult;
 import io.github.mikeandike08.taper.service.BarberService;
 
 @RestController
@@ -34,12 +35,12 @@ public class BarberController {
         size = Math.min(size, 100); // Limit the size to 100
 
         // Get our list of barbers
-        List<Barber> barbers = barberService.getAllBarbers(page, size);
+        PageResult<Barber> barbers = barberService.getAllBarbers(page, size);
 
         // Convert to our BarberSummary DTO
         // Takes all Barbers and turn them all into BarberSummary objects,
         // then collect them into a List
-        List<BarberSummary> barberSummaries = barbers.stream()
+        List<BarberSummary> barberSummaries = barbers.items().stream()
             .map(BarberSummary::from)
             .collect(java.util.stream.Collectors.toList());
 

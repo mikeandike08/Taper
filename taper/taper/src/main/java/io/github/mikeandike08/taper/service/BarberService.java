@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import io.github.mikeandike08.taper.model.Barber;
+import io.github.mikeandike08.taper.model.PageResult;
 
 @Service
 public class BarberService {
@@ -11,9 +12,18 @@ public class BarberService {
         new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State")
     );
 
-    public List<Barber> getAllBarbers(int page, int size){
+    public PageResult<Barber> getAllBarbers(int page, int size){
+        // Filter the list
+        // TODO: Implement filtering logic here
+       
+        // Record the total
+        long total = barbers.size();
+
+        // Calculate the offset
         int fromIndex = page * size;
         int toIndex = Math.min(fromIndex + size, barbers.size());
-        return barbers.subList(fromIndex, toIndex);
+
+        // Return a sublist of the filtered list, with the total
+        return new PageResult<>(barbers.subList(fromIndex, toIndex), total);
     }
 }
