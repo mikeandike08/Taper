@@ -35,7 +35,7 @@ public class BarberController {
         size = Math.min(size, 100); // Limit the size to 100
 
         // Get our list of barbers
-        PageResult<Barber> barbers = barberService.getAllBarbers(page, size);
+        PageResult<Barber> barbers = barberService.getBarbers(page, size);
 
         // Convert to our BarberSummary DTO
         // Takes all Barbers and turn them all into BarberSummary objects,
@@ -44,8 +44,9 @@ public class BarberController {
             .map(BarberSummary::from)
             .collect(java.util.stream.Collectors.toList());
 
+
         // Create a ListResponse, so it has the key "items"
-        ListResponse<BarberSummary> response = new ListResponse<>(barberSummaries, page, size);
+        ListResponse<BarberSummary> response = ListResponse.of(barberSummaries, page, size, barbers.totalItems());
         return response;
     }
 }

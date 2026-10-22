@@ -12,7 +12,7 @@ public class BarberService {
         new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State")
     );
 
-    public PageResult<Barber> getAllBarbers(int page, int size){
+    public PageResult<Barber> getBarbers(int page, int size){
         // Filter the list
         // TODO: Implement filtering logic here
        
