@@ -4,7 +4,6 @@ import java.util.List;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.http.MediaType;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
 import io.github.mikeandike08.taper.service.BarberService;
 
-@Validated
 @RestController
 @RequestMapping(value="/barbers", produces=MediaType.APPLICATION_JSON_VALUE) 
 public class BarberController {
@@ -42,6 +40,8 @@ public class BarberController {
     public ListResponse<BarberSummary> getAllBarbers(
         @RequestParam(defaultValue = "0") @Min(0) int page,
         @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size){
+
+        size = Math.max(size, 100); // Limit the size to 100
 
         // Get our list of barbers
         PageResult<Barber> barbers = barberService.getBarbers(page, size);
