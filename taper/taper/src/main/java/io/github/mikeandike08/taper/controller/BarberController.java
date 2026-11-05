@@ -3,6 +3,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.http.MediaType;
 
@@ -33,6 +34,10 @@ public class BarberController {
      * @param size @defaultValue = 10
      * @return A ListResponse object containing a list of barbers, with the key "items"
      */
+    @Operation(
+        summary="Gets a list of all barbers",
+        description = "Returns barbers sorted by id ascending."
+    )
     @GetMapping
     public ListResponse<BarberSummary> getAllBarbers(
         @RequestParam(defaultValue = "0") @Min(0) int page,

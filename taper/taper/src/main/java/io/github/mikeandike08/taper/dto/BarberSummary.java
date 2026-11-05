@@ -2,15 +2,16 @@ package io.github.mikeandike08.taper.dto;
 import java.util.Set;
 
 import io.github.mikeandike08.taper.model.Barber;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public record BarberSummary(
-    Long id,
-    String name,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) Long id,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String name,
     String shopName,
     String city,
     String state,
     Set<String> styles,
-    String profileImageUrl
+    @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String profileImageUrl
 ) 
 {
     public BarberSummary{
