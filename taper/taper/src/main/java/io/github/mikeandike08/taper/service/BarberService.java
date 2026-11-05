@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
+import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
 
 @Service
 public class BarberService {
@@ -13,6 +14,12 @@ public class BarberService {
     );
 
     public PageResult<Barber> getBarbers(int page, int size){
+        // Validate the parameters
+        if (page < 0)
+            throw new InvalidParameterException("Page must be greater than 0");
+        if (size <= 0)
+            throw new InvalidParameterException("Size must be greater than 0");
+        
         // Filter the list
         // TODO: Implement filtering logic here
        

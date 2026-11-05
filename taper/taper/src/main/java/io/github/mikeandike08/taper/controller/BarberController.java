@@ -1,6 +1,11 @@
 package io.github.mikeandike08.taper.controller;
 import java.util.List;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.http.MediaType;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +17,9 @@ import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
 import io.github.mikeandike08.taper.service.BarberService;
 
+@Validated
 @RestController
-@RequestMapping("/barbers")
+@RequestMapping(value="/barbers", produces=MediaType.APPLICATION_JSON_VALUE) 
 public class BarberController {
     private final BarberService barberService;
 
@@ -29,10 +35,8 @@ public class BarberController {
      */
     @GetMapping
     public ListResponse<BarberSummary> getAllBarbers(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size){
-        
-        size = Math.min(size, 100); // Limit the size to 100
+        @RequestParam(defaultValue = "0") @Min(0) int page,
+        @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size){
 
         // Get our list of barbers
         PageResult<Barber> barbers = barberService.getBarbers(page, size);
@@ -43,7 +47,6 @@ public class BarberController {
         List<BarberSummary> barberSummaries = barbers.items().stream()
             .map(BarberSummary::from)
             .collect(java.util.stream.Collectors.toList());
-
 
         // Create a ListResponse, so it has the key "items"
         ListResponse<BarberSummary> response = ListResponse.of(barberSummaries, page, size, barbers.totalItems());
