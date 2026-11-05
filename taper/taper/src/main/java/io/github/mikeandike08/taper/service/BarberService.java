@@ -9,7 +9,7 @@ import io.github.mikeandike08.taper.model.PageResult;
 @Service
 public class BarberService {
     private final List<Barber> barbers = List.of(
-        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State")
+        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", 0)
     );
 
     public PageResult<Barber> getBarbers(int page, int size){
@@ -20,7 +20,8 @@ public class BarberService {
         long total = barbers.size();
 
         // Calculate the offset
-        int fromIndex = page * size;
+        int fromIndex = Math.min(page * size, barbers.size());
+
         int toIndex = Math.min(fromIndex + size, barbers.size());
 
         // Return a sublist of the filtered list, with the total

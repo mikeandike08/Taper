@@ -19,6 +19,9 @@ public record ListResponse<T>(List<T> items, int page, int size, long totalItems
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");
         }
+        if (size > 100){
+            throw new IllegalArgumentException("Size must be between 1 and 100");
+        }
         long totalPages = (totalItems + size - 1) / size;
         return new ListResponse<>(items, page, size, totalItems, totalPages);
     }

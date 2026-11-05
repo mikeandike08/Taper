@@ -14,19 +14,20 @@ public class Barber {
     // links to our s3 storage
     private String profileImageUrl;
 
-    private Long id; // Decide whether to get ID from postgres, or generate one ourselves.
+    private long id; // Decide whether to get ID from postgres, or generate one ourselves.
 
     // The styles the barber is experienced in
     private Set<String> styles = new HashSet<>();
 
     // Initialize the object
-    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state, long id) {
         this.name = name;
         this.shopName = shopName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.state = state;
+        this.id = id;
     }
 
     // Create our Setters
