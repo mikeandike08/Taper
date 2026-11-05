@@ -41,8 +41,6 @@ public class BarberController {
         @RequestParam(defaultValue = "0") @Min(0) int page,
         @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size){
 
-        size = Math.max(size, 100); // Limit the size to 100
-
         // Get our list of barbers
         PageResult<Barber> barbers = barberService.getBarbers(page, size);
 
