@@ -1,15 +1,37 @@
 package io.github.mikeandike08.taper.service;
-import org.springframework.stereotype.Service;
-import io.github.mikeandike08.taper.model.Barber;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import io.github.mikeandike08.taper.model.Barber;
+import io.github.mikeandike08.taper.model.PageResult;
+import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
 
 @Service
 public class BarberService {
     private final List<Barber> barbers = List.of(
-        new Barber("Test barber", "something@gmail.com", "203-342-1934", "Fake", "State")
+        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", 0)
     );
 
-    public List<Barber> getAllBarbers(){
-        return barbers;
+    public PageResult<Barber> getBarbers(int page, int size){
+        // Validate the parameters
+        if (page < 0)
+            throw new InvalidParameterException("Page must be greater than 0");
+        if (size <= 0)
+            throw new InvalidParameterException("Size must be greater than 0");
+        
+        // Filter the list
+        // TODO: Implement filtering logic here
+       
+        // Record the total
+        long total = barbers.size();
+
+        // Calculate the offset
+        int fromIndex = Math.min(page * size, barbers.size());
+
+        int toIndex = Math.min(fromIndex + size, barbers.size());
+
+        // Return a sublist of the filtered list, with the total
+        return new PageResult<>(barbers.subList(fromIndex, toIndex), total);
     }
 }

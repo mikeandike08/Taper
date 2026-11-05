@@ -1,30 +1,44 @@
 package io.github.mikeandike08.taper.model;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Barber {
     // Barber Personal Info
     private String name;
+    private String shopName;
     private String email;
     private String phoneNumber;
     private String city;
     private String state;
+    
+    // links to our s3 storage
+    private String profileImageUrl;
 
-    private Long id; // Decide whether to get ID from postgres, or generate one ourselves.
+    private long id; // Decide whether to get ID from postgres, or generate one ourselves.
 
     // The styles the barber is experienced in
     private Set<String> styles = new HashSet<>();
 
     // Initialize the object
-    public Barber(String name, String email, String phoneNumber, String city, String state) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state, long id) {
         this.name = name;
+        this.shopName = shopName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.state = state;
+        this.id = id;
     }
 
     // Create our Setters
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public void setImageUrl(String url){
+        this.profileImageUrl = url;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -71,11 +85,23 @@ public class Barber {
         return this.state;
     }
 
-    public Long getID(){
+    public String getImageUrl(){
+        return this.profileImageUrl;
+    }
+
+    public String getShopName() {
+        return this.shopName;
+    }
+
+    public Long getId(){
         return this.id;
     }
 
     public Set<String> getStyles(){
         return Set.copyOf(this.styles);
+    }
+
+    public String getProfileImageUrl() {
+        return this.profileImageUrl;
     }
 }
