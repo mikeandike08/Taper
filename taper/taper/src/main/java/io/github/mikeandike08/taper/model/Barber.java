@@ -10,6 +10,7 @@ public class Barber {
     private String phoneNumber;
     private String city;
     private String state;
+    private String bio;
     
     // links to our s3 storage
     private String profileImageUrl;
@@ -20,7 +21,7 @@ public class Barber {
     private Set<String> styles = new HashSet<>();
 
     // Initialize the object
-    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state, long id) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state, long id, String bio) {
         this.name = name;
         this.shopName = shopName;
         this.email = email;
@@ -28,11 +29,16 @@ public class Barber {
         this.city = city;
         this.state = state;
         this.id = id;
+        this.bio = bio;
     }
 
     // Create our Setters
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public void setImageUrl(String url){
@@ -67,6 +73,10 @@ public class Barber {
     // Create our Getters
     public String getName() {
         return this.name;
+    }
+
+    public String getBio() {
+        return this.bio;
     }
 
     public String getEmail() {
