@@ -10,7 +10,7 @@ import io.github.mikeandike08.taper.model.PageResult;
 @Service
 public class BarberService {
     private final List<Barber> barbers = List.of(
-        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", 0, "")
+        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", "City", "12345", 1, "This is a test barber.")
     );
 
     public PageResult<Barber> getBarbers(int page, int size){

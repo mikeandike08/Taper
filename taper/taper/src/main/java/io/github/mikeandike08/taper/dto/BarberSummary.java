@@ -1,5 +1,4 @@
 package io.github.mikeandike08.taper.dto;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ public record BarberSummary(
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) Long id,
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String name,
     String shopName,
-    List<String> address,
+    List<AddressDTO> address,
     String bio,
     Set<String> styles,
     @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String profileImageUrl
@@ -26,15 +25,11 @@ public record BarberSummary(
      * @return BarberSummary object with the barber's id, name, shop name, city, state, styles, and profile image URL
      */
     public static BarberSummary from(Barber barber){
-        List<String> address = new ArrayList<>();
-        address.add(barber.getCity());
-        address.add(barber.getState());
-
         return new BarberSummary(
             barber.getId(),
             barber.getName(),
             barber.getShopName(),
-            address,
+            List.of(AddressDTO.from(barber.getStreet(), barber.getCity(), barber.getState(), barber.getZipCode())),
             barber.getBio(),
             barber.getStyles(),
             barber.getProfileImageUrl()

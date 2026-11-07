@@ -1,6 +1,10 @@
 package io.github.mikeandike08.taper.model;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import io.github.mikeandike08.taper.dto.AddressDTO;
 
 public class Barber {
     // Barber Personal Info
@@ -8,9 +12,13 @@ public class Barber {
     private String shopName;
     private String email;
     private String phoneNumber;
+    private String bio;
+
+    // Barber Address Info
+    private String street;
     private String city;
     private String state;
-    private String bio;
+    private String zipCode;
     
     // links to our s3 storage
     private String profileImageUrl;
@@ -21,13 +29,15 @@ public class Barber {
     private Set<String> styles = new HashSet<>();
 
     // Initialize the object
-    public Barber(String name, String shopName, String email, String phoneNumber, String city, String state, long id, String bio) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String street, String city, String state, String zipCode, long id, String bio) {
         this.name = name;
         this.shopName = shopName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.street = street;
         this.city = city;
         this.state = state;
+        this.zipCode = zipCode;
         this.id = id;
         this.bio = bio;
     }
@@ -75,6 +85,12 @@ public class Barber {
         return this.name;
     }
 
+    public List<AddressDTO> getAddress() {
+        List<AddressDTO> address = new ArrayList<>();
+        address.add(AddressDTO.from(this.street, this.city, this.state, this.zipCode));
+        return address;
+    }
+
     public String getBio() {
         return this.bio;
     }
@@ -101,6 +117,14 @@ public class Barber {
 
     public String getShopName() {
         return this.shopName;
+    }
+
+    public String getStreet() {
+        return this.street;
+    }
+
+    public String getZipCode() {
+        return this.zipCode;
     }
 
     public Long getId(){
