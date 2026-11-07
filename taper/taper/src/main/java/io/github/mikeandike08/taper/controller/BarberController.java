@@ -1,11 +1,7 @@
 package io.github.mikeandike08.taper.controller;
 import java.util.List;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +12,9 @@ import io.github.mikeandike08.taper.dto.ListResponse;
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
 import io.github.mikeandike08.taper.service.BarberService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping(value="/barbers", produces=MediaType.APPLICATION_JSON_VALUE) 
