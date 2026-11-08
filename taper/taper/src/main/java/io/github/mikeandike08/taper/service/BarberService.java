@@ -1,17 +1,23 @@
 package io.github.mikeandike08.taper.service;
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
+import io.github.mikeandike08.taper.exceptions.ResourceNotFoundException;
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
-import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
+import io.github.mikeandike08.taper.repository.BarberRepository;
 
 @Service
 public class BarberService {
-    private final List<Barber> barbers = List.of(
-        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", 0)
-    );
+    private final BarberRepository barberRepository;
+
+    public BarberService(BarberRepository barberRepository) {
+        this.barberRepository = barberRepository;
+    }
 
     public PageResult<Barber> getBarbers(int page, int size){
         // Validate the parameters
@@ -23,15 +29,16 @@ public class BarberService {
         // Filter the list
         // TODO: Implement filtering logic here
        
-        // Record the total
-        long total = barbers.size();
-
         // Calculate the offset
-        int fromIndex = Math.min(page * size, barbers.size());
-
-        int toIndex = Math.min(fromIndex + size, barbers.size());
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Barber> result = barberRepository.findAll(pageable);
 
         // Return a sublist of the filtered list, with the total
-        return new PageResult<>(barbers.subList(fromIndex, toIndex), total);
+        return new PageResult<>(result.getContent(), result.getTotalElements());
+    }
+
+    public Barber getBarberById(Long id) {
+    return barberRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Barber with id " + id + " not found"));
     }
 }

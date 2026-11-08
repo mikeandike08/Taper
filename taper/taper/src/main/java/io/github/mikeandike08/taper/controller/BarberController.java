@@ -1,12 +1,9 @@
 package io.github.mikeandike08.taper.controller;
 import java.util.List;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
-
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +13,9 @@ import io.github.mikeandike08.taper.dto.ListResponse;
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
 import io.github.mikeandike08.taper.service.BarberService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping(value="/barbers", produces=MediaType.APPLICATION_JSON_VALUE) 
@@ -54,5 +54,21 @@ public class BarberController {
         // Create a ListResponse, so it has the key "items"
         ListResponse<BarberSummary> response = ListResponse.of(barberSummaries, page, size, barbers.totalItems());
         return response;
+    }
+
+    /**
+     * Gets a barber by id
+     * @param id
+     * @return BarberSummary object containing the barber's id, name, shop name, city, state, styles, and profile image URL
+     * @throws ResourceNotFoundException if the barber does not exist
+     */
+    @Operation(
+        summary="Gets a barber by id",
+        description = "Returns a barber by id. If the barber does not exist, returns a 404 error."
+    )
+    @GetMapping (value="/{id}")
+    public BarberSummary getBarberById(@PathVariable Long id){
+        Barber barber = barberService.getBarberById(id);
+        return BarberSummary.from(barber);
     }
 }

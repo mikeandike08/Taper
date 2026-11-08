@@ -1,5 +1,5 @@
 package io.github.mikeandike08.taper.dto;
-import java.util.Set;
+import java.util.List;
 
 import io.github.mikeandike08.taper.model.Barber;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,15 +7,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record BarberSummary(
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) Long id,
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String name,
-    String shopName,
-    String city,
-    String state,
-    Set<String> styles,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String shopName,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) AddressDTO address,
+    @Schema(types = {"string", "null"}, description = "Null if a bio is never set.") String bio,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Style tags in alphabetical order. Empty array if no styles are set."
+) List<String> styles,
     @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String profileImageUrl
 ) 
 {
     public BarberSummary{
-        styles = Set.copyOf(styles);
+        styles = styles.stream().sorted().toList();
     }
 
     /**
@@ -28,9 +29,9 @@ public record BarberSummary(
             barber.getId(),
             barber.getName(),
             barber.getShopName(),
-            barber.getCity(),
-            barber.getState(),
-            barber.getStyles(),
+            barber.getAddress(),
+            barber.getBio(),
+            List.copyOf(barber.getStyles()),
             barber.getProfileImageUrl()
         );
     }
