@@ -1,4 +1,8 @@
 package io.github.mikeandike08.taper.service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
@@ -25,16 +29,12 @@ public class BarberService {
         // Filter the list
         // TODO: Implement filtering logic here
        
-        // Record the total
-        long total = barberRepository.count();
-
         // Calculate the offset
-        int fromIndex = Math.min(page * size, (int) total);
-
-        int toIndex = Math.min(fromIndex + size, (int) total);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Barber> result = barberRepository.findAll(pageable);
 
         // Return a sublist of the filtered list, with the total
-        return new PageResult<>(barberRepository.findAll().subList(fromIndex, toIndex), total);
+        return new PageResult<>(result.getContent(), result.getTotalElements());
     }
 
     public Barber getBarberById(Long id) {

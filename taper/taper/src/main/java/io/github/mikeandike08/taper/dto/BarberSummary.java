@@ -10,7 +10,7 @@ public record BarberSummary(
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String shopName,
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) AddressDTO address,
     @Schema(types = {"string", "null"}, description = "Null if a bio is never set.") String bio,
-    @Schema(types = {"string", "null"}, description = "Null if styles are never set.") Set<String> styles,
+    @Schema(types = {"string", "[]"}, description = "Array of Strings if styles are never set.") Set<String> styles,
     @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String profileImageUrl
 ) 
 {
