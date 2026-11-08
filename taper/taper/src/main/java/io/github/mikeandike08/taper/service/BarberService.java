@@ -1,17 +1,19 @@
 package io.github.mikeandike08.taper.service;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import io.github.mikeandike08.taper.exceptions.InvalidParameterException;
+import io.github.mikeandike08.taper.exceptions.ResourceNotFoundException;
 import io.github.mikeandike08.taper.model.Barber;
 import io.github.mikeandike08.taper.model.PageResult;
+import io.github.mikeandike08.taper.repository.BarberRepository;
 
 @Service
 public class BarberService {
-    private final List<Barber> barbers = List.of(
-        new Barber("Test barber", "Test shop", "something@gmail.com", "203-342-1934", "Fake", "State", "City", "12345", 1, "This is a test barber.")
-    );
+    private final BarberRepository barberRepository;
+
+    public BarberService(BarberRepository barberRepository) {
+        this.barberRepository = barberRepository;
+    }
 
     public PageResult<Barber> getBarbers(int page, int size){
         // Validate the parameters
@@ -24,14 +26,19 @@ public class BarberService {
         // TODO: Implement filtering logic here
        
         // Record the total
-        long total = barbers.size();
+        long total = barberRepository.count();
 
         // Calculate the offset
-        int fromIndex = Math.min(page * size, barbers.size());
+        int fromIndex = Math.min(page * size, (int) total);
 
-        int toIndex = Math.min(fromIndex + size, barbers.size());
+        int toIndex = Math.min(fromIndex + size, (int) total);
 
         // Return a sublist of the filtered list, with the total
-        return new PageResult<>(barbers.subList(fromIndex, toIndex), total);
+        return new PageResult<>(barberRepository.findAll().subList(fromIndex, toIndex), total);
+    }
+
+    public Barber getBarberById(Long id) {
+    return barberRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Barber with id " + id + " not found"));
     }
 }

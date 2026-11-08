@@ -5,7 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import io.github.mikeandike08.taper.dto.AddressDTO;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity 
 public class Barber {
     // Barber Personal Info
     private String name;
@@ -23,13 +29,19 @@ public class Barber {
     // links to our s3 storage
     private String profileImageUrl;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; // Decide whether to get ID from postgres, or generate one ourselves.
 
     // The styles the barber is experienced in
+    @ElementCollection
     private Set<String> styles = new HashSet<>();
 
+    protected Barber() {
+    }
+
     // Initialize the object
-    public Barber(String name, String shopName, String email, String phoneNumber, String street, String city, String state, String zipCode, long id, String bio) {
+    public Barber(String name, String shopName, String email, String phoneNumber, String street, String city, String state, String zipCode, String bio) {
         this.name = name;
         this.shopName = shopName;
         this.email = email;

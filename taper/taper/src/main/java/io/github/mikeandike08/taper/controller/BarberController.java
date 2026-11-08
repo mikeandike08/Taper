@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,5 +54,11 @@ public class BarberController {
         // Create a ListResponse, so it has the key "items"
         ListResponse<BarberSummary> response = ListResponse.of(barberSummaries, page, size, barbers.totalItems());
         return response;
+    }
+
+    @GetMapping (value="/{id}")
+    public BarberSummary getBarberById(@PathVariable Long id){
+        Barber barber = barberService.getBarberById(id);
+        return BarberSummary.from(barber);
     }
 }
