@@ -113,7 +113,7 @@ public class Barber {
     }
 
     public Set<String> getStyles(){
-        return Set.copyOf(this.styles);
+        return Set.copyOf(styles);
     }
 
     public String getProfileImageUrl() {
