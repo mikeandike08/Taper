@@ -1,5 +1,4 @@
 package io.github.mikeandike08.taper.dto;
-import java.util.List;
 import java.util.Set;
 
 import io.github.mikeandike08.taper.model.Barber;
@@ -8,10 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record BarberSummary(
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) Long id,
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String name,
-    String shopName,
-    List<AddressDTO> address,
-    @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String bio,
-    Set<String> styles,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String shopName,
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED) AddressDTO address,
+    @Schema(types = {"string", "null"}, description = "Null if a bio is never set.") String bio,
+    @Schema(types = {"string", "null"}, description = "Null if styles are never set.") Set<String> styles,
     @Schema(types = {"string", "null"}, description = "Null if a profile picture is never set.") String profileImageUrl
 ) 
 {
@@ -29,7 +28,7 @@ public record BarberSummary(
             barber.getId(),
             barber.getName(),
             barber.getShopName(),
-            List.of(AddressDTO.from(barber.getStreet(), barber.getCity(), barber.getState(), barber.getZipCode())),
+            barber.getAddress(),
             barber.getBio(),
             barber.getStyles(),
             barber.getProfileImageUrl()

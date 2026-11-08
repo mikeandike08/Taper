@@ -1,7 +1,10 @@
 package io.github.mikeandike08.taper.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Embeddable;
 
+
+@Embeddable
 public record AddressDTO(
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String street,
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED) String city,

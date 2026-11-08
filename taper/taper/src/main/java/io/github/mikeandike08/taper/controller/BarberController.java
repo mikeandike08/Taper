@@ -56,6 +56,16 @@ public class BarberController {
         return response;
     }
 
+    /**
+     * Gets a barber by id
+     * @param id
+     * @return BarberSummary object containing the barber's id, name, shop name, city, state, styles, and profile image URL
+     * @throws ResourceNotFoundException if the barber does not exist
+     */
+    @Operation(
+        summary="Gets a barber by id",
+        description = "Returns a barber by id. If the barber does not exist, returns a 404 error."
+    )
     @GetMapping (value="/{id}")
     public BarberSummary getBarberById(@PathVariable Long id){
         Barber barber = barberService.getBarberById(id);

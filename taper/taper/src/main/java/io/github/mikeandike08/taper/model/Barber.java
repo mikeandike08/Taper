@@ -1,7 +1,5 @@
 package io.github.mikeandike08.taper.model;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import io.github.mikeandike08.taper.dto.AddressDTO;
@@ -21,10 +19,7 @@ public class Barber {
     private String bio;
 
     // Barber Address Info
-    private String street;
-    private String city;
-    private String state;
-    private String zipCode;
+    private AddressDTO address;
     
     // links to our s3 storage
     private String profileImageUrl;
@@ -46,11 +41,7 @@ public class Barber {
         this.shopName = shopName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.id = id;
+        this.address = new AddressDTO(street, city, state, zipCode);
         this.bio = bio;
     }
 
@@ -75,14 +66,6 @@ public class Barber {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public void setStyles(Set<String> newStyles){
         this.styles = new HashSet<>(newStyles);
     }
@@ -92,15 +75,17 @@ public class Barber {
         this.styles.add(style);
     }
 
+    public void setAddress(String street, String city, String state, String zipCode){
+        this.address = new AddressDTO(street, city, state, zipCode);
+    }
+
     // Create our Getters
     public String getName() {
         return this.name;
     }
 
-    public List<AddressDTO> getAddress() {
-        List<AddressDTO> address = new ArrayList<>();
-        address.add(AddressDTO.from(this.street, this.city, this.state, this.zipCode));
-        return address;
+    public AddressDTO getAddress() {
+        return this.address;
     }
 
     public String getBio() {
@@ -115,28 +100,12 @@ public class Barber {
         return this.phoneNumber;
     }
 
-    public String getCity() {
-        return this.city;
-    }
-
-    public String getState() {
-        return this.state;
-    }
-
     public String getImageUrl(){
         return this.profileImageUrl;
     }
 
     public String getShopName() {
         return this.shopName;
-    }
-
-    public String getStreet() {
-        return this.street;
-    }
-
-    public String getZipCode() {
-        return this.zipCode;
     }
 
     public Long getId(){
